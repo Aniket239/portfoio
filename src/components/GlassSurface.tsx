@@ -21,24 +21,24 @@ export interface GlassSurfaceProps {
   xChannel?: 'R' | 'G' | 'B';
   yChannel?: 'R' | 'G' | 'B';
   mixBlendMode?:
-    | 'normal'
-    | 'multiply'
-    | 'screen'
-    | 'overlay'
-    | 'darken'
-    | 'lighten'
-    | 'color-dodge'
-    | 'color-burn'
-    | 'hard-light'
-    | 'soft-light'
-    | 'difference'
-    | 'exclusion'
-    | 'hue'
-    | 'saturation'
-    | 'color'
-    | 'luminosity'
-    | 'plus-darker'
-    | 'plus-lighter';
+  | 'normal'
+  | 'multiply'
+  | 'screen'
+  | 'overlay'
+  | 'darken'
+  | 'lighten'
+  | 'color-dodge'
+  | 'color-burn'
+  | 'hard-light'
+  | 'soft-light'
+  | 'difference'
+  | 'exclusion'
+  | 'hue'
+  | 'saturation'
+  | 'color'
+  | 'luminosity'
+  | 'plus-darker'
+  | 'plus-lighter';
   className?: string;
   style?: React.CSSProperties;
 }
@@ -76,6 +76,18 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
   const greenChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const blueChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const gaussianBlurRef = useRef<SVGFEGaussianBlurElement>(null);
+  const [svgSupported, setSvgSupported] = React.useState<boolean | null>(null);
+
+  useEffect(() => {
+    setSvgSupported(supportsSVGFilters());
+  }, []);
+
+  const classMode =
+    svgSupported === null
+      ? "glass-surface--fallback"
+      : svgSupported
+        ? "glass-surface--svg"
+        : "glass-surface--fallback";
 
   const generateDisplacementMap = () => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -161,9 +173,9 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
     setTimeout(updateDisplacementMap, 0);
   }, [width, height]);
 
-const supportsSVGFilters = () => {
-    if (typeof window === "undefined" || typeof document === "undefined") 
-        return false;
+  const supportsSVGFilters = () => {
+    if (typeof window === "undefined" || typeof document === "undefined")
+      return false;
 
     const isWebkit = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
     const isFirefox = /Firefox/.test(navigator.userAgent);
@@ -173,7 +185,7 @@ const supportsSVGFilters = () => {
     const div = document.createElement('div');
     div.style.backdropFilter = `url(#${filterId})`;
     return div.style.backdropFilter !== '';
-};
+  };
 
 
   const containerStyle: React.CSSProperties = {
@@ -189,7 +201,7 @@ const supportsSVGFilters = () => {
   return (
     <div
       ref={containerRef}
-      className={`glass-surface ${supportsSVGFilters() ? 'glass-surface--svg' : 'glass-surface--fallback'} ${className}`}
+      className={`glass-surface ${classMode} ${className}`}
       style={containerStyle}
     >
       <svg className="glass-surface__filter" xmlns="http://www.w3.org/2000/svg">
