@@ -1,35 +1,25 @@
-import FloatingLines from '@/components/FloatingLines'
+"use client"
+import Particles from '@/components/Particles'
+import { useTheme } from '@/hooks/ThemeContext';
 import React from 'react'
 
 const page = () => {
+    const { theme } = useTheme();
   return (
     <div>
-    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <FloatingLines
-        enabledWaves={['top', 'middle', 'bottom']}
-        // Array - specify line count per wave; Number - same count for all waves
-        lineCount={[10, 15, 20]}
-        // Array - specify line distance per wave; Number - same distance for all waves
-        lineDistance={[8, 6, 4]}
-        bendRadius={5.0}
-        bendStrength={-0.5}
-        interactive={true}
-        parallax={true}
-      />
-    </div>
-    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <FloatingLines
-        enabledWaves={['top', 'middle', 'bottom']}
-        // Array - specify line count per wave; Number - same count for all waves
-        lineCount={[10, 15, 20]}
-        // Array - specify line distance per wave; Number - same distance for all waves
-        lineDistance={[8, 6, 4]}
-        bendRadius={5.0}
-        bendStrength={-0.5}
-        interactive={true}
-        parallax={true}
-      />
-    </div>
+      <div style={{ width: '100%', height: '100vh', position: 'relative', background: undefined }}>
+        <Particles
+          particleColors={['#ffffff', '#ffffff']}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover={true}
+          alphaParticles={false}
+          disableRotation={false}
+          theme={theme}
+        />
+      </div>
     </div>
   )
 }
