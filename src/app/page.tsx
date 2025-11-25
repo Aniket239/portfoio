@@ -2,12 +2,16 @@
 import Particles from '@/components/Particles'
 import { useTheme } from '@/hooks/ThemeContext';
 import React from 'react'
+import '../styles/globals.css';
+import Navbar from '@/components/Navbar';
 
-const page = () => {
-    const { theme } = useTheme();
+const Page = () => {
+  const { theme } = useTheme();
+
   return (
-    <div>
-      <div style={{ width: '100%', height: '100vh', position: 'relative', background: undefined }}>
+    <>
+      {/* FULL WIDTH BACKGROUND */}
+      <div style={{ width: '100%', height: '100vh', position: 'absolute', background: undefined }}>
         <Particles
           particleColors={['#ffffff', '#ffffff']}
           particleCount={200}
@@ -20,8 +24,14 @@ const page = () => {
           theme={theme}
         />
       </div>
-    </div>
-  )
-}
 
-export default page
+      {/* 80% WIDTH CONTENT */}
+      <div className="container">
+        <Navbar />
+        <h1>Home</h1>
+      </div>
+    </>
+  );
+};
+
+export default Page;
