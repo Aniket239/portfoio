@@ -9,8 +9,13 @@
   margin-left: 0.25rem;
   display: inline-block;
   opacity: 1;
+  color: var(--white);
 }
 
 .text-type__cursor--hidden {
   display: none;
+}
+
+.text-type__content{
+  color: var(--white);
 }

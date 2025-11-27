@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Renderer, Camera, Geometry, Program, Mesh } from 'ogl';
 
 import '../styles/Particles.css';
@@ -17,10 +17,9 @@ interface ParticlesProps {
   cameraDistance?: number;
   disableRotation?: boolean;
   className?: string;
-  theme?: string;
 }
 
-const defaultColors: string[] = ['#ffffff', '#ffffff', '#ffffff'];
+const defaultColors: string[] = ['#000000', '#222222', '#333333'];
 
 const hexToRgb = (hex: string): [number, number, number] => {
   hex = hex.replace(/^#/, '');
@@ -114,18 +113,32 @@ const Particles: React.FC<ParticlesProps> = ({
   cameraDistance = 20,
   disableRotation = false,
   className,
-  theme,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [currentColors, setCurrentColors] = useState<string[]>([]);
 
-const lightColors = ['#000000', '#222222', '#333333'];
-const darkColors = ['#ffffff', '#e0e0e0'];
+  useEffect(() => {
+    const updateColors = () => {
+      const isDark = document.documentElement.classList.contains("dark");
 
-  const palette =
-    theme === "dark"
-      ? (darkColors)
-      : (lightColors);
+      // dark → white particles
+      // light → black particles
+      setCurrentColors(isDark ? ["#ffffff"] : ["#000000"]);
+    };
+
+    updateColors();
+
+    const observer = new MutationObserver(updateColors);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -157,12 +170,14 @@ const darkColors = ['#ffffff', '#e0e0e0'];
     if (moveParticlesOnHover) {
       container.addEventListener('mousemove', handleMouseMove);
     }
-
+    console.log('====================================');
+    console.log(currentColors);
+    console.log('====================================');
     const count = particleCount;
     const positions = new Float32Array(count * 3);
     const randoms = new Float32Array(count * 4);
     const colors = new Float32Array(count * 3);
-    const paletteToUse = palette;
+    const paletteToUse = currentColors.length ? currentColors : (particleColors || defaultColors);
 
     for (let i = 0; i < count; i++) {
       let x: number, y: number, z: number, len: number;
@@ -254,7 +269,6 @@ const darkColors = ['#ffffff', '#e0e0e0'];
     sizeRandomness,
     cameraDistance,
     disableRotation,
-    theme 
   ]);
 
   return <div ref={containerRef} className={`particles-container ${className}`} />;

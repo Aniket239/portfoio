@@ -6,6 +6,7 @@ import GlassSurface from "./GlassSurface";
 import Image from "next/image";
 import { useTheme } from "@/hooks/ThemeContext";
 import nextSvg from "../../public/next.svg";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
@@ -27,8 +28,8 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
-            <GlassSurface width="100%" height="auto" borderRadius={24}>
-                <div className="flex justify-between items-center w-full">
+            <GlassSurface width="100%" height={'auto'} borderRadius={24}>
+                <div className="flex justify-between items-center w-full h-[50px]">
                     {/* Logo */}
                     <div className="flex items-center gap-3">
                         {isMobile && (
@@ -59,7 +60,7 @@ const Navbar = () => {
                                 {/* Theme toggle */}
                             </ul>
                         )}
-                        <div >
+                        {/* <div >
                             <label htmlFor="switch" className="toggle">
                                 <input type="checkbox" className="input" id="switch" checked={theme === "light"} onChange={toggleTheme} />
                                 <div className="icon icon--moon">
@@ -92,69 +93,70 @@ const Navbar = () => {
                                     </svg>
                                 </div>
                             </label>
-                        </div>
+                        </div> */}
+                        <AnimatedThemeToggler />
+
                     </div>
                     {/* Mobile Hamburger */}
                 </div>
 
                 {/* Mobile Menu — Expanding Area */}
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                 {isMobile && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={menuOpen ? { 
-                            height: "auto", 
-                            opacity: 1,
-                            padding: '0.5rem 3rem 0.5rem 3rem',
-                            margin: '0.5rem 0'
-                        } : { 
-                            height: 0, 
-                            opacity: 0,
-                            padding: '0 3rem',
-                            margin: 0
+                        key="mobile-menu"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                            opacity: menuOpen ? 1 : 0,
+                            height: menuOpen ? 'auto' : 0,
+                        }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{
+                            opacity: { duration: 0.2 },
+                            height: { 
+                                duration: 0.3, 
+                                ease: [0.4, 0, 0.2, 1],
+                                when: 'beforeChildren'
+                            },
                         }}
                         className="overflow-hidden"
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                        <ul className="flex flex-col items-start gap-4 text-center">
-                            <li className="navbar-item-text">Home</li>
-                            <li className="navbar-item-text">About</li>
-                            <li className="navbar-item-text">Projects</li>
-                            {/* <div >
-                                <label htmlFor="switch" className="toggle">
-                                    <input type="checkbox" className="input" id="switch" checked={theme === "light"} onChange={toggleTheme} />
-                                    <div className="icon icon--moon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                            width="20"
-                                            height="20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
-                                                clipRule="evenodd"
-                                            ></path>
-                                        </svg>
-                                    </div>
-
-                                    <div className="icon icon--sun">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                            width="20"
-                                            height="20"
-                                        >
-                                            <path
-                                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
-                                            ></path>
-                                        </svg>
-                                    </div>
-                                </label>
-                            </div> */}
+                        <motion.div
+                            initial={{ y: -10 }}
+                            animate={{ y: 0 }}
+                            transition={{
+                                duration: 0.2,
+                                delay: 0.1,
+                                ease: [0.4, 0, 0.2, 1]
+                            }}
+                        >
+                        <ul className="flex flex-col items-start gap-4 !pl-12 !pb-3 !pt-3">
+                            <motion.li 
+                                className="navbar-item-text"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.1 }}
+                            >
+                                Home
+                            </motion.li>
+                            <motion.li 
+                                className="navbar-item-text"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.15 }}
+                            >
+                                About
+                            </motion.li>
+                            <motion.li 
+                                className="navbar-item-text"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                Projects
+                            </motion.li>
                         </ul>
+                        </motion.div>
                     </motion.div>
                 )}
                 </AnimatePresence>

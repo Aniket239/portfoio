@@ -5,11 +5,10 @@
   justify-content: center;
   /* overflow: hidden; */
   transition: opacity 0.26s ease-out;
-  padding: 1%;
+  padding: 0 1%;
   box-sizing: border-box;
   border: none;
 }
-
 
 .glass-surface__filter {
   width: 100%;
