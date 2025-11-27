@@ -8,12 +8,14 @@ interface ThemeContextType {
     theme: Theme;
     toggleTheme: () => void;
     setTheme: (theme: Theme) => void;
+    ready: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setThemeState] = useState<Theme>("light");
+    const [ready, setReady] = useState(false); // 👈 add this
 
     // ---- Load theme on mount (localStorage → device preference) ----
     useEffect(() => {
@@ -37,7 +39,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         };
 
         mediaQuery.addEventListener("change", systemThemeListener);
-
+        setReady(true); // 🔥 UI becomes ready now
         return () => {
             mediaQuery.removeEventListener("change", systemThemeListener);
         };
@@ -63,7 +65,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, setTheme, ready }}>
             {children}
         </ThemeContext.Provider>
     );

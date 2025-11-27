@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useId } from 'react';
-import './GlassSurface.css';
+import '../styles/GlassSurface.css';
 
 export interface GlassSurfaceProps {
   children?: React.ReactNode;

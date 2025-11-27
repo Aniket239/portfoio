@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import GlassSurface from "./GlassSurface";
 import Image from "next/image";
 import { useTheme } from "@/hooks/ThemeContext";
@@ -18,9 +19,13 @@ const Navbar = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    
     return (
-        <div
-            className="fixed top-5 z-10 left-1/2 -translate-x-1/2 w-[95%]"
+        <motion.div
+            className="fixed top-5 z-10 left-1/2 -translate-x-1/2 container"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
         >
             <GlassSurface width="100%" height="auto" borderRadius={24}>
                 <div className="flex justify-between items-center w-full">
@@ -42,7 +47,7 @@ const Navbar = () => {
                                 </svg>
                             </label>
                         )}
-                        <Image src={nextSvg} alt="Logo" width={50} height={10} />
+                        <p className="logo">Aniket Biswas</p>
                     </div>
                     {/* Desktop Menu */}
                     <div className="flex items-center gap-5">
@@ -51,15 +56,6 @@ const Navbar = () => {
                                 <li className="navbar-item-text">Home</li>
                                 <li className="navbar-item-text">About</li>
                                 <li className="navbar-item-text">Projects</li>
-
-                                <li>
-                                    <div className="button-borders">
-                                        <button className="primary-button">
-                                            Hire Me
-                                        </button>
-                                    </div>
-                                </li>
-
                                 {/* Theme toggle */}
                             </ul>
                         )}
@@ -102,26 +98,28 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Menu — Expanding Area */}
+                <AnimatePresence>
                 {isMobile && (
-                    <div
-                        className={`
-                            overflow-hidden transition-all duration-300 !mt-4 !mb-4
-                            ${menuOpen ? "!px-12 flex flex-col" : "max-h-0 hidden"}
-                        `}
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={menuOpen ? { 
+                            height: "auto", 
+                            opacity: 1,
+                            padding: '0.5rem 3rem 0.5rem 3rem',
+                            margin: '0.5rem 0'
+                        } : { 
+                            height: 0, 
+                            opacity: 0,
+                            padding: '0 3rem',
+                            margin: 0
+                        }}
+                        className="overflow-hidden"
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         <ul className="flex flex-col items-start gap-4 text-center">
                             <li className="navbar-item-text">Home</li>
                             <li className="navbar-item-text">About</li>
                             <li className="navbar-item-text">Projects</li>
-
-                            <li>
-                                <div className="button-borders mx-auto">
-                                    <button className="primary-button w-full">
-                                        Hire Me
-                                    </button>
-                                </div>
-                            </li>
-
                             {/* <div >
                                 <label htmlFor="switch" className="toggle">
                                     <input type="checkbox" className="input" id="switch" checked={theme === "light"} onChange={toggleTheme} />
@@ -157,10 +155,11 @@ const Navbar = () => {
                                 </label>
                             </div> */}
                         </ul>
-                    </div>
+                    </motion.div>
                 )}
+                </AnimatePresence>
             </GlassSurface>
-        </div>
+        </motion.div>
     );
 };
 

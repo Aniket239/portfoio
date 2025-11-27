@@ -1,34 +1,25 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import ClientWrapper from "@/components/ClientWrapper";
 import "../styles/globals.css";
-import { ThemeProvider } from "@/hooks/ThemeContext";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Aniket Biswas",
   description: "Aniket Biswas's Portfolio",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider>
-        {children}
-        </ThemeProvider>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Science+Gothic:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+
+      </head>
+      <body>
+        {/* Wrap everything in a client-side provider/loader */}
+        <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );
