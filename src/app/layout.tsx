@@ -15,7 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Science+Gothic:wght@100..900&display=swap"
           rel="stylesheet"
         />
-
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+        />
       </head>
       <body>
         {/* Wrap everything in a client-side provider/loader */}

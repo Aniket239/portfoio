@@ -1,13 +1,11 @@
 "use client"
 import Particles from '@/components/Particles'
-import { useTheme } from '@/hooks/ThemeContext';
 import React from 'react'
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Home from '@/components/Home';
 
 const Page = () => {
-  const { theme } = useTheme();
 
 
   return (
@@ -23,7 +21,7 @@ const Page = () => {
           moveParticlesOnHover={true}
           alphaParticles={false}
           disableRotation={false}
-          // theme={theme}
+        // theme={theme}
         />
       </div>
 

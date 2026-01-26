@@ -20,7 +20,7 @@ const Navbar = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    
+
     return (
         <motion.div
             className="fixed top-5 z-10 left-1/2 -translate-x-1/2 container"
@@ -94,7 +94,7 @@ const Navbar = () => {
                                 </div>
                             </label>
                         </div> */}
-                        <AnimatedThemeToggler />
+                        <AnimatedThemeToggler className="icon" />
 
                     </div>
                     {/* Mobile Hamburger */}
@@ -102,63 +102,63 @@ const Navbar = () => {
 
                 {/* Mobile Menu — Expanding Area */}
                 <AnimatePresence mode="wait">
-                {isMobile && (
-                    <motion.div
-                        key="mobile-menu"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{
-                            opacity: menuOpen ? 1 : 0,
-                            height: menuOpen ? 'auto' : 0,
-                        }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{
-                            opacity: { duration: 0.2 },
-                            height: { 
-                                duration: 0.3, 
-                                ease: [0.4, 0, 0.2, 1],
-                                when: 'beforeChildren'
-                            },
-                        }}
-                        className="overflow-hidden"
-                    >
+                    {isMobile && (
                         <motion.div
-                            initial={{ y: -10 }}
-                            animate={{ y: 0 }}
-                            transition={{
-                                duration: 0.2,
-                                delay: 0.1,
-                                ease: [0.4, 0, 0.2, 1]
+                            key="mobile-menu"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{
+                                opacity: menuOpen ? 1 : 0,
+                                height: menuOpen ? 'auto' : 0,
                             }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{
+                                opacity: { duration: 0.2 },
+                                height: {
+                                    duration: 0.3,
+                                    ease: [0.4, 0, 0.2, 1],
+                                    when: 'beforeChildren'
+                                },
+                            }}
+                            className="overflow-hidden"
                         >
-                        <ul className="flex flex-col items-start gap-4 !pl-12 !pb-3 !pt-3">
-                            <motion.li 
-                                className="navbar-item-text"
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.1 }}
+                            <motion.div
+                                initial={{ y: -10 }}
+                                animate={{ y: 0 }}
+                                transition={{
+                                    duration: 0.2,
+                                    delay: 0.1,
+                                    ease: [0.4, 0, 0.2, 1]
+                                }}
                             >
-                                Home
-                            </motion.li>
-                            <motion.li 
-                                className="navbar-item-text"
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.15 }}
-                            >
-                                About
-                            </motion.li>
-                            <motion.li 
-                                className="navbar-item-text"
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                Projects
-                            </motion.li>
-                        </ul>
+                                <ul className="flex flex-col items-start gap-4 !pl-12 !pb-3 !pt-3">
+                                    <motion.li
+                                        className="navbar-item-text"
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.1 }}
+                                    >
+                                        Home
+                                    </motion.li>
+                                    <motion.li
+                                        className="navbar-item-text"
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.15 }}
+                                    >
+                                        About
+                                    </motion.li>
+                                    <motion.li
+                                        className="navbar-item-text"
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.2 }}
+                                    >
+                                        Projects
+                                    </motion.li>
+                                </ul>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
+                    )}
                 </AnimatePresence>
             </GlassSurface>
         </motion.div>
