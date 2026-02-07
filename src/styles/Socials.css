@@ -1,0 +1,121 @@
+/* Socials fixed to bottom-right with vertical line and circular buttons */
+.socials {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.socials .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: transform 150ms ease, background 150ms ease;
+    overflow: hidden;
+}
+
+.social-btn img {
+    width: 32px;
+    height: 32px;
+}
+
+.social-btn .material-symbols-outlined {
+    width: 22px;
+    height: 22px;
+    display: block;
+    color: var(--primary);
+}
+
+.social-btn:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.socials .line {
+    width: 2px;
+    height: 96px;
+    background: linear-gradient(var(--primary), var(--secondary));
+    border-radius: 2px;
+    margin-top: 6px;
+    opacity: 0.95;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Small screens: reduce spacing */
+@media (max-width: 480px) {
+    .socials {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .socials .line {
+        height: 72px;
+    }
+
+    .social-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* flowing light animation overlay for the vertical line (more prominent) */
+.socials .line::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -45%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 55%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 100%);
+    filter: blur(10px);
+    opacity: 1;
+    border-radius: 6px;
+    box-shadow: 0 0 22px #1793ffd7, 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: socials-flow 1.6s ease-in-out infinite;
+}
+
+@keyframes socials-flow {
+    0% {
+        top: -80%;
+        opacity: 0;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    45% {
+        top: 8%;
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0.6;
+    }
+
+    100% {
+        top: 120%;
+        opacity: 0;
+    }
+}

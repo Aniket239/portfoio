@@ -4,9 +4,12 @@ import React from 'react'
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Home from '@/components/Home';
+import Socials from '@/components/Socials';
+import About from '@/components/About';
+import Projects from '@/components/Projects';
+import Contact from '@/components/Contact';
 
 const Page = () => {
-
 
   return (
     <>
@@ -28,7 +31,11 @@ const Page = () => {
       {/* 80% WIDTH CONTENT */}
       <div>
         <Navbar />
+        <Socials />
         <Home />
+        <About />
+        <Projects />
+        <Contact />
       </div>
     </>
   );

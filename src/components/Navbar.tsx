@@ -13,6 +13,14 @@ const Navbar = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const handleScrollTo = (id: string) => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+            setMenuOpen(false);
+        }
+    };
+
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         handleResize();
@@ -54,9 +62,26 @@ const Navbar = () => {
                     <div className="flex items-center gap-5">
                         {!isMobile && (
                             <ul className="flex gap-6 items-center">
-                                <li className="navbar-item-text">Home</li>
-                                <li className="navbar-item-text">About</li>
-                                <li className="navbar-item-text">Projects</li>
+                                <li className="navbar-item-text">
+                                    <button type="button" onClick={() => handleScrollTo("home")}>
+                                        Home
+                                    </button>
+                                </li>
+                                <li className="navbar-item-text">
+                                    <button type="button" onClick={() => handleScrollTo("about")}>
+                                        About
+                                    </button>
+                                </li>
+                                <li className="navbar-item-text">
+                                    <button type="button" onClick={() => handleScrollTo("projects")}>
+                                        Projects
+                                    </button>
+                                </li>
+                                <li className="navbar-item-text">
+                                    <button type="button" onClick={() => handleScrollTo("contact")}>
+                                        Contact
+                                    </button>
+                                </li>
                                 {/* Theme toggle */}
                             </ul>
                         )}
@@ -137,7 +162,9 @@ const Navbar = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.1 }}
                                     >
-                                        Home
+                                        <button type="button" onClick={() => handleScrollTo("home")}>
+                                            Home
+                                        </button>
                                     </motion.li>
                                     <motion.li
                                         className="navbar-item-text"
@@ -145,7 +172,9 @@ const Navbar = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.15 }}
                                     >
-                                        About
+                                        <button type="button" onClick={() => handleScrollTo("about")}>
+                                            About
+                                        </button>
                                     </motion.li>
                                     <motion.li
                                         className="navbar-item-text"
@@ -153,7 +182,19 @@ const Navbar = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.2 }}
                                     >
-                                        Projects
+                                        <button type="button" onClick={() => handleScrollTo("projects")}>
+                                            Projects
+                                        </button>
+                                    </motion.li>
+                                    <motion.li
+                                        className="navbar-item-text"
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.25 }}
+                                    >
+                                        <button type="button" onClick={() => handleScrollTo("contact")}>
+                                            Contact
+                                        </button>
                                     </motion.li>
                                 </ul>
                             </motion.div>

@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--text);
+  background: var(--bg-1);
   /* overflow: hidden; */
 }
 
@@ -80,7 +81,7 @@
   border-radius: 24px;
   object-fit: cover;
   background: linear-gradient(135deg, #111827, #020617);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.336);
 }
 
 /* FLOATING CARDS */
@@ -171,7 +172,7 @@
 
 /* RESPONSIVE */
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 768px) {
   .hero-container {
     /* grid-template-columns: 1fr; */
     flex-direction: column-reverse;
@@ -189,7 +190,7 @@
   } */
 
   .hero-completion {
-    right: -10px;
+    right: -20px;
     top: -20px;
     bottom: unset;
     padding: 10px;
@@ -197,7 +198,36 @@
 
   .hero-experience {
     /* display: none; */
-    left: -10px;
+    left: -20px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column-reverse;
+    padding: 70px 0 50px 0;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-tech,
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-completion {
+    right: -20px;
+    top: -20px;
+    bottom: unset;
+    padding: 10px;
+  }
+
+  .hero-experience {
+    /* display: none; */
+    left: -20px;
     padding: 10px;
   }
 }

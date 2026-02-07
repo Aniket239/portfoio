@@ -11,7 +11,7 @@ const Home = () => {
     document.body.removeChild(link);
   };
   return (
-    <section className="hero">
+    <section className="hero" id="home">
       <div className="container">
         <div className="hero-container">
           {/* LEFT */}
