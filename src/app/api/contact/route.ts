@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const smtpPort = Number(getEnv('SMTP_PORT'))
     const smtpUser = getEnv('SMTP_USER')
     const smtpPass = getEnv('SMTP_PASS')
-    const mailTo = process.env.MAIL_TO || smtpUser
+    const ownerEmail = 'aniketbiswas2392001@gmail.com'
     const mailFrom = process.env.MAIL_FROM || smtpUser
 
     const transporter = nodemailer.createTransport({
@@ -46,59 +46,84 @@ export async function POST(request: Request) {
       }
     })
 
-    await transporter.sendMail({
-      from: `Portfolio Contact <${mailFrom}>`,
-      to: mailTo,
-      replyTo: email,
-      subject: `[Portfolio] ${subject}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `
-  <div style="margin:0; padding:0; background:#0b1020; font-family: Arial, sans-serif; color:#f8fafc;">
-    
-    <!-- Wrapper -->
-    <div style="max-width:600px; margin:20px auto; background:rgba(15,23,42,0.75); border:1px solid #262E3A; border-radius:12px; overflow:hidden;">
-      
-      <!-- Header -->
-      <div style="padding:25px; text-align:center; background:linear-gradient(135deg, #1793FF, #6f7bff);">
-        <h1 style="margin:0; font-size:24px; color:#ffffff;">📩 New Contact Request</h1>
-        <p style="margin:5px 0 0; color:#e2e8f0;">Someone reached out through your portfolio</p>
+    const messageHtml = message.replace(/\n/g, '<br />')
+
+    const internalText = `New app inquiry\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
+    const internalHtml = `
+  <div style="margin:0; padding:0; background:#0a0f14; font-family: Arial, sans-serif; color:#e6f1ff;">
+    <div style="max-width:640px; margin:20px auto; background:#0c1622; border:1px solid #16303a; border-radius:12px; overflow:hidden;">
+      <div style="padding:18px 22px; background:linear-gradient(135deg, #00f5a0, #00d9ff); color:#001018;">
+        <div style="font-size:12px; letter-spacing:2px; font-family: 'Courier New', Courier, monospace;">NEW QUEST</div>
+        <div style="font-size:22px; font-weight:700;">App Development Inquiry</div>
+        <div style="font-size:13px;">A new lead just landed.</div>
       </div>
-
-      <!-- Image -->
-      <div style="text-align:center; padding:20px;">
-        <img 
-          src="https://cdn-icons-png.flaticon.com/512/561/561127.png" 
-          alt="Contact"
-          width="100"
-          style="opacity:0.9;"
-        />
+      <div style="padding:20px 22px;">
+        <div style="margin:0 0 10px;"><strong style="color:#7ef7d7;">Name:</strong> ${name}</div>
+        <div style="margin:0 0 10px;"><strong style="color:#7ef7d7;">Email:</strong> ${email}</div>
+        <div style="margin:0 0 14px;"><strong style="color:#7ef7d7;">Subject:</strong> ${subject}</div>
+        <div style="margin-top:12px; font-size:14px; line-height:1.6; color:#cfe7ff;">
+          <div style="color:#7ef7d7; font-weight:700; margin-bottom:6px;">Message</div>
+          <div>${messageHtml}</div>
+        </div>
       </div>
-
-      <!-- Content -->
-      <div style="padding:0 25px 20px;">
-        <p><strong style="color:#93c5fd;">Name:</strong> ${name}</p>
-        <p><strong style="color:#93c5fd;">Email:</strong> ${email}</p>
-        <p><strong style="color:#93c5fd;">Subject:</strong> ${subject}</p>
-
-        <p style="margin-top:15px;"><strong style="color:#93c5fd;">Message:</strong></p>
-        <p style="color:#cbd5f5;">
-          ${message.replace(/\n/g, '<br />')}
-        </p>
-      </div>
-
-      <!-- Footer -->
-      <div style="background:rgba(59,130,246,0.16); padding:20px; text-align:center;">
-        <h3 style="margin:0 0 8px; color:#22c55e;">✅ Message Received</h3>
-        <p style="margin:0; color:#cbd5f5;">
-          Thank you for reaching out. We’ll review your message and get back to you soon.
-        </p>
-      </div>
-
     </div>
-
   </div>
 `
-    })
+
+    const autoReplyText = `Hi ${name},\n\nThanks for reaching out about your app idea. Your message is in my queue and I will review it shortly.\n\nSummary\n- Subject: ${subject}\n- Your email: ${email}\n\nYour message:\n${message}\n\nIf you need to add anything, just reply to this email.\n\nAniket`
+    const autoReplyHtml = `
+  <div style="margin:0; padding:0; background:#0a0f14; font-family: Arial, sans-serif; color:#e6f1ff;">
+    <div style="max-width:640px; margin:20px auto; background:#0c1622; border:1px solid #16303a; border-radius:14px; overflow:hidden; box-shadow:0 0 24px rgba(0,255,214,0.2);">
+      <div style="padding:22px; text-align:center; background:linear-gradient(135deg, #00f5a0, #00d9ff); color:#001018;">
+        <div style="font-size:12px; letter-spacing:2px; font-family: 'Courier New', Courier, monospace;">QUEST ACCEPTED</div>
+        <div style="font-size:26px; font-weight:700;">App Build Request</div>
+        <div style="font-size:14px;">Thanks for reaching out, ${name}.</div>
+      </div>
+
+      <div style="padding:22px;">
+        <p style="margin:0 0 12px; color:#cfe7ff;">
+          Your message is safely in my inbox. I will review the details and get back to you with next steps.
+        </p>
+
+        <div style="margin:16px 0; padding:14px; border:1px dashed #1bd1a5; background:rgba(0,255,214,0.08); border-radius:10px;">
+          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#7ef7d7;">Your Quest Log</div>
+          <div style="margin-top:8px; font-size:14px;">
+            <div><strong style="color:#7ef7d7;">Subject:</strong> ${subject}</div>
+            <div><strong style="color:#7ef7d7;">Email:</strong> ${email}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; font-size:14px; line-height:1.6; color:#cfe7ff;">
+          <div style="color:#7ef7d7; font-weight:700; margin-bottom:6px;">Your Message</div>
+          <div>${messageHtml}</div>
+        </div>
+      </div>
+
+      <div style="padding:16px; background:#081018; text-align:center; color:#9cc2ff; font-size:12px;">
+        Response window: 24-48 hours. If it is urgent, reply to this email.
+      </div>
+    </div>
+  </div>
+`
+
+    await Promise.all([
+      transporter.sendMail({
+        from: `Portfolio Contact <${mailFrom}>`,
+        to: ownerEmail,
+        replyTo: email,
+        subject: `[Portfolio] ${subject}`,
+        text: internalText,
+        html: internalHtml
+      }),
+      transporter.sendMail({
+        from: `Aniket Biswas <${mailFrom}>`,
+        to: email,
+        replyTo: ownerEmail,
+        subject: `Quest Accepted: ${subject}`,
+        text: autoReplyText,
+        html: autoReplyHtml
+      })
+    ])
 
     return NextResponse.json({ message: 'Message sent.' })
   } catch (error) {
