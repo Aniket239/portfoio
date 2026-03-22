@@ -48,59 +48,97 @@ export async function POST(request: Request) {
 
     const messageHtml = message.replace(/\n/g, '<br />')
 
-    const internalText = `New app inquiry\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
+    const internalText = `New mobile app inquiry\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nReply-To: ${email}\n\nMessage:\n${message}`
     const internalHtml = `
-  <div style="margin:0; padding:0; background:#0a0f14; font-family: Arial, sans-serif; color:#e6f1ff;">
-    <div style="max-width:640px; margin:20px auto; background:#0c1622; border:1px solid #16303a; border-radius:12px; overflow:hidden;">
-      <div style="padding:18px 22px; background:linear-gradient(135deg, #00f5a0, #00d9ff); color:#001018;">
-        <div style="font-size:12px; letter-spacing:2px; font-family: 'Courier New', Courier, monospace;">NEW QUEST</div>
-        <div style="font-size:22px; font-weight:700;">App Development Inquiry</div>
-        <div style="font-size:13px;">A new lead just landed.</div>
+  <div style="margin:0; padding:0; background:#0b1020; font-family: Arial, sans-serif; color:#e2e8f0;">
+    <div style="max-width:640px; margin:20px auto; background:#0f172a; border:1px solid #1e293b; border-radius:16px; overflow:hidden; box-shadow:0 24px 50px rgba(15,23,42,0.35);">
+      <div style="padding:22px 24px; background:linear-gradient(135deg, #1793FF, #6f7bff); color:#ffffff;">
+        <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase;">New Inquiry</div>
+        <div style="font-size:24px; font-weight:700;">Mobile App Development</div>
+        <div style="font-size:13px; opacity:0.9;">A new message arrived from your portfolio.</div>
       </div>
-      <div style="padding:20px 22px;">
-        <div style="margin:0 0 10px;"><strong style="color:#7ef7d7;">Name:</strong> ${name}</div>
-        <div style="margin:0 0 10px;"><strong style="color:#7ef7d7;">Email:</strong> ${email}</div>
-        <div style="margin:0 0 14px;"><strong style="color:#7ef7d7;">Subject:</strong> ${subject}</div>
-        <div style="margin-top:12px; font-size:14px; line-height:1.6; color:#cfe7ff;">
-          <div style="color:#7ef7d7; font-weight:700; margin-bottom:6px;">Message</div>
-          <div>${messageHtml}</div>
+
+      <div style="padding:18px 24px; text-align:center;">
+        <img
+          src="https://img.icons8.com/fluency/96/smartphone-tablet.png"
+          alt="Mobile app"
+          width="96"
+          height="96"
+          style="display:inline-block;"
+        />
+      </div>
+
+      <div style="padding:0 24px 22px;">
+        <div style="background:#0b1324; border:1px solid #1f2a44; border-radius:12px; padding:14px 16px; margin-bottom:16px;">
+          <div style="color:#d6b36a; font-weight:700; margin-bottom:8px;">Lead Details</div>
+          <div style="margin-bottom:6px;"><strong style="color:#e2e8f0;">Name:</strong> ${name}</div>
+          <div style="margin-bottom:6px;"><strong style="color:#e2e8f0;">Email:</strong> ${email}</div>
+          <div><strong style="color:#e2e8f0;">Subject:</strong> ${subject}</div>
         </div>
+
+        <div style="color:#d6b36a; font-weight:700; margin-bottom:8px;">Message</div>
+        <div style="color:#cbd5f5; line-height:1.6;">${messageHtml}</div>
+      </div>
+
+      <div style="padding:14px 24px; background:#0b1324; border-top:1px solid #1f2a44; color:#94a3b8; font-size:12px; text-align:center;">
+        Reply directly to this lead from your email client.
       </div>
     </div>
   </div>
 `
 
-    const autoReplyText = `Hi ${name},\n\nThanks for reaching out about your app idea. Your message is in my queue and I will review it shortly.\n\nSummary\n- Subject: ${subject}\n- Your email: ${email}\n\nYour message:\n${message}\n\nIf you need to add anything, just reply to this email.\n\nAniket`
+    const autoReplyText = `Hi ${name},\n\nThank you for contacting me about your mobile app project. I have received your message and will review it shortly.\n\nSummary\n- Subject: ${subject}\n- Your email: ${email}\n\nContact details\n- WhatsApp: 6290034904\n- LinkedIn: https://www.linkedin.com/in/aniket-kumar-biswas/\n\nYour message:\n${message}\n\nIf you would like to add anything, just reply to this email.\n\nAniket`
     const autoReplyHtml = `
-  <div style="margin:0; padding:0; background:#0a0f14; font-family: Arial, sans-serif; color:#e6f1ff;">
-    <div style="max-width:640px; margin:20px auto; background:#0c1622; border:1px solid #16303a; border-radius:14px; overflow:hidden; box-shadow:0 0 24px rgba(0,255,214,0.2);">
-      <div style="padding:22px; text-align:center; background:linear-gradient(135deg, #00f5a0, #00d9ff); color:#001018;">
-        <div style="font-size:12px; letter-spacing:2px; font-family: 'Courier New', Courier, monospace;">QUEST ACCEPTED</div>
-        <div style="font-size:26px; font-weight:700;">App Build Request</div>
-        <div style="font-size:14px;">Thanks for reaching out, ${name}.</div>
+  <div style="margin:0; padding:0; background:#0b1020; font-family: Arial, sans-serif; color:#e2e8f0;">
+    <div style="max-width:640px; margin:20px auto; background:#0f172a; border:1px solid #1e293b; border-radius:16px; overflow:hidden; box-shadow:0 24px 50px rgba(15,23,42,0.35);">
+      <div style="padding:22px; text-align:center; background:linear-gradient(135deg, #1793FF, #6f7bff); color:#ffffff;">
+        <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase;">Inquiry Received</div>
+        <div style="font-size:26px; font-weight:700;">Mobile App Development</div>
+        <div style="font-size:14px; opacity:0.9;">Thank you for reaching out, ${name}.</div>
       </div>
 
-      <div style="padding:22px;">
-        <p style="margin:0 0 12px; color:#cfe7ff;">
-          Your message is safely in my inbox. I will review the details and get back to you with next steps.
+      <div style="padding:20px 24px;">
+        <div style="text-align:center; margin-bottom:14px;">
+          <img
+            src="https://img.icons8.com/fluency/96/smartphone-tablet.png"
+            alt="Mobile app"
+            width="96"
+            height="96"
+            style="display:inline-block;"
+          />
+        </div>
+
+        <p style="margin:0 0 12px; color:#cbd5f5;">
+          I have received your message and will review the details. You can expect a response soon.
         </p>
 
-        <div style="margin:16px 0; padding:14px; border:1px dashed #1bd1a5; background:rgba(0,255,214,0.08); border-radius:10px;">
-          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#7ef7d7;">Your Quest Log</div>
+        <div style="margin:16px 0; padding:14px; border:1px dashed rgba(214, 179, 106, 0.8); background:rgba(23, 147, 255, 0.08); border-radius:12px;">
+          <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#d6b36a;">Inquiry Summary</div>
           <div style="margin-top:8px; font-size:14px;">
-            <div><strong style="color:#7ef7d7;">Subject:</strong> ${subject}</div>
-            <div><strong style="color:#7ef7d7;">Email:</strong> ${email}</div>
+            <div><strong style="color:#e2e8f0;">Subject:</strong> ${subject}</div>
+            <div><strong style="color:#e2e8f0;">Email:</strong> ${email}</div>
           </div>
         </div>
 
-        <div style="margin-top:12px; font-size:14px; line-height:1.6; color:#cfe7ff;">
-          <div style="color:#7ef7d7; font-weight:700; margin-bottom:6px;">Your Message</div>
+        <div style="margin-top:12px; font-size:14px; line-height:1.6; color:#cbd5f5;">
+          <div style="color:#d6b36a; font-weight:700; margin-bottom:6px;">Your Message</div>
           <div>${messageHtml}</div>
+        </div>
+
+        <div style="margin-top:16px; padding:14px 16px; background:#0b1324; border:1px solid #1f2a44; border-radius:12px;">
+          <div style="color:#d6b36a; font-weight:700; margin-bottom:8px;">Contact Details</div>
+          <div style="margin-bottom:6px;"><strong style="color:#e2e8f0;">WhatsApp:</strong> 6290034904</div>
+          <div>
+            <strong style="color:#e2e8f0;">LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/aniket-kumar-biswas/" style="color:#93c5fd; text-decoration:none;">
+              aniket-kumar-biswas
+            </a>
+          </div>
         </div>
       </div>
 
-      <div style="padding:16px; background:#081018; text-align:center; color:#9cc2ff; font-size:12px;">
-        Response window: 24-48 hours. If it is urgent, reply to this email.
+      <div style="padding:16px; background:#0b1324; text-align:center; color:#94a3b8; font-size:12px;">
+        Typical response time: 24-48 hours. If it is urgent, reply to this email.
       </div>
     </div>
   </div>
@@ -119,7 +157,7 @@ export async function POST(request: Request) {
         from: `Aniket Biswas <${mailFrom}>`,
         to: email,
         replyTo: ownerEmail,
-        subject: `Quest Accepted: ${subject}`,
+        subject: `Mobile App Inquiry Received: ${subject}`,
         text: autoReplyText,
         html: autoReplyHtml
       })
