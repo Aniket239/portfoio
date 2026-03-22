@@ -53,13 +53,51 @@ export async function POST(request: Request) {
       subject: `[Portfolio] ${subject}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       html: `
-        <h2>New portfolio contact</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br />')}</p>
-      `
+  <div style="margin:0; padding:0; background:#0b1020; font-family: Arial, sans-serif; color:#f8fafc;">
+    
+    <!-- Wrapper -->
+    <div style="max-width:600px; margin:20px auto; background:rgba(15,23,42,0.75); border:1px solid #262E3A; border-radius:12px; overflow:hidden;">
+      
+      <!-- Header -->
+      <div style="padding:25px; text-align:center; background:linear-gradient(135deg, #1793FF, #6f7bff);">
+        <h1 style="margin:0; font-size:24px; color:#ffffff;">📩 New Contact Request</h1>
+        <p style="margin:5px 0 0; color:#e2e8f0;">Someone reached out through your portfolio</p>
+      </div>
+
+      <!-- Image -->
+      <div style="text-align:center; padding:20px;">
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/561/561127.png" 
+          alt="Contact"
+          width="100"
+          style="opacity:0.9;"
+        />
+      </div>
+
+      <!-- Content -->
+      <div style="padding:0 25px 20px;">
+        <p><strong style="color:#93c5fd;">Name:</strong> ${name}</p>
+        <p><strong style="color:#93c5fd;">Email:</strong> ${email}</p>
+        <p><strong style="color:#93c5fd;">Subject:</strong> ${subject}</p>
+
+        <p style="margin-top:15px;"><strong style="color:#93c5fd;">Message:</strong></p>
+        <p style="color:#cbd5f5;">
+          ${message.replace(/\n/g, '<br />')}
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div style="background:rgba(59,130,246,0.16); padding:20px; text-align:center;">
+        <h3 style="margin:0 0 8px; color:#22c55e;">✅ Message Received</h3>
+        <p style="margin:0; color:#cbd5f5;">
+          Thank you for reaching out. We’ll review your message and get back to you soon.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+`
     })
 
     return NextResponse.json({ message: 'Message sent.' })
